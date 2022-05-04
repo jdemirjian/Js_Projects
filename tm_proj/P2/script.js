@@ -10,6 +10,8 @@ const movieSelect = document.getElementById('movie');
 //+ infront of "movieSelect.value" turns it into a number
 let ticketPrice = +movieSelect.value; 
 
+populateUI();
+
 //functions
 
 // Save SelectedMovie index & price
@@ -17,8 +19,6 @@ function setMovieData(movieIndex, moviePrice) {
     localStorage.setItem('selectedMovieIndex', movieIndex);
     localStorage.setItem('selectedMoviePrice', moviePrice);
 }
-
-
 
 //update total and count
 function updateSelectedCount() { 
@@ -50,7 +50,29 @@ function updateSelectedCount() {
     total.innerText = selectedSeatsCount * ticketPrice;
 }
 
+//Get data from local storage & populate UI
+function populateUI() {
+    //need to pull out the selectedSeats from local storage
+    //because we used the JSON.stringify to turn it into a string, we need to turn it back into an array
+    //basically, JSON.parse does the opposite of JSON.stringify, so we use it to convert the information back into an array
+    const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
 
+    if(selectedSeats !== null && selectedSeats.length() > 0) {
+        //need index to call in selectedSeats.indexOf()
+        seats.forEach((seat, index) => {
+            if(selectedSeats.indexOf(index) > -1) {
+                //callList.add() allows us to add the 'selected' class to any clicked seat in the local storage 
+                seat.callList.add('selected');
+            }
+        });
+
+    }
+    const selectedMovieIndex = localStorage.getItem('selectedMovieIndex');
+
+    if (selectedMovieIndex !== null) {
+        movieSelect.selectedIndex = selectedMovieIndex;  
+    }
+}
 
 //Eventlisteners
 //(e) => is an "arrow function"
