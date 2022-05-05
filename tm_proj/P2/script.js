@@ -57,12 +57,12 @@ function populateUI() {
     //basically, JSON.parse does the opposite of JSON.stringify, so we use it to convert the information back into an array
     const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
 
-    if(selectedSeats !== null && selectedSeats.length() > 0) {
+    if(selectedSeats !== null && selectedSeats.length > 0) {
         //need index to call in selectedSeats.indexOf()
-        seats.forEach((seat, index) => {
+        seats.forEach((seat , index) => {
             if(selectedSeats.indexOf(index) > -1) {
                 //callList.add() allows us to add the 'selected' class to any clicked seat in the local storage 
-                seat.callList.add('selected');
+                seat.classList.add('selected');
             }
         });
 
@@ -96,3 +96,6 @@ container.addEventListener('click', (e) => {
         updateSelectedCount();
     }
 })
+
+//Initial Count and Total set
+updateSelectedCount();
